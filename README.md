@@ -6,33 +6,40 @@
 local ScreenGui = Instance.new("ScreenGui")
 local main = Instance.new("Frame")
 local title = Instance.new("TextLabel")
-local Fly = Instance.new("TextButton")
-local PlayerTracker = Instance.new("TextButton")
-local Btools = Instance.new("TextButton")
-local OREHP = Instance.new("TextButton")
 local close = Instance.new("TextButton")
+local Fly = Instance.new("TextButton")
+local Btools = Instance.new("TextButton")
+local MoreHp = Instance.new("TextButton")
 local RevizAdmin = Instance.new("TextButton")
 local PrisonBreaker = Instance.new("TextButton")
+local PlayerRadar = Instance.new("TextButton")
 local idk = Instance.new("TextButton")
-local Open = Instance.new("TextButton")
+local idk_2 = Instance.new("TextButton")
+local idk_3 = Instance.new("TextButton")
+local CreditsOPEN = Instance.new("TextButton")
+local Credits = Instance.new("Frame")
+local CTitle = Instance.new("TextLabel")
+local CreditsT = Instance.new("TextLabel")
+local TextButton = Instance.new("TextButton")
+local OPEN = Instance.new("TextButton")
 
 --Properties:
 
-ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Parent = game.CoreGui
 
 main.Name = "main"
 main.Parent = ScreenGui
 main.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
-main.Position = UDim2.new(0.691311002, 0, 0.68466258, 0)
-main.Size = UDim2.new(0, 358, 0, 223)
+main.Position = UDim2.new(0.732469559, 0, 0.707975447, 0)
+main.Size = UDim2.new(0, 328, 0, 216)
 main.Visible = false
-main.Active = true
 main.Draggable = true
+main.Active = true
 
 title.Name = "title"
 title.Parent = main
 title.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
-title.Size = UDim2.new(0, 358, 0, 33)
+title.Size = UDim2.new(0, 291, 0, 30)
 title.Font = Enum.Font.SourceSans
 title.Text = "C00lkid Gui"
 title.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -40,155 +47,11 @@ title.TextScaled = true
 title.TextSize = 14.000
 title.TextWrapped = true
 
-Fly.Name = "Fly"
-Fly.Parent = main
-Fly.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-Fly.Position = UDim2.new(0.0195530728, 0, 0.179372191, 0)
-Fly.Size = UDim2.new(0, 58, 0, 50)
-Fly.Font = Enum.Font.SourceSans
-Fly.Text = "Fly (R15) (You Can't Unfly)"
-Fly.TextColor3 = Color3.fromRGB(0, 0, 0)
-Fly.TextScaled = true
-Fly.TextSize = 14.000
-Fly.TextWrapped = true
-Fly.MouseButton1Down:Connect(function()
-	_G.FLYING = false
-	local LP = game:service('Players').LocalPlayer
-	local T = LP.Character.UpperTorso
-	local CONTROL = {F = 0, B = 0, L = 0, R = 0}
-	local lCONTROL = {F = 0, B = 0, L = 0, R = 0}
-	local SPEED = 5
-	local MOUSE = LP:GetMouse()
-
-
-	local function FLY()
-		_G.FLYING = true
-		local BG = Instance.new('BodyGyro', T)
-		local BV = Instance.new('BodyVelocity', T)
-		BG.P = 9e4
-		BG.maxTorque = Vector3.new(9e9, 9e9, 9e9)
-		BG.cframe = T.CFrame
-		BV.velocity = Vector3.new(0, 0.1, 0)
-		BV.maxForce = Vector3.new(9e9, 9e9, 9e9)
-
-
-		spawn(function()
-			repeat wait()
-				LP.Character.Humanoid.PlatformStand = true
-				if CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0 then
-					SPEED = 50
-				elseif not (CONTROL.L + CONTROL.R ~= 0 or CONTROL.F + CONTROL.B ~= 0) and SPEED ~= 0 then
-					SPEED = 0
-				end
-				if (CONTROL.L + CONTROL.R) ~= 0 or (CONTROL.F + CONTROL.B) ~= 0 then
-					BV.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (CONTROL.F + CONTROL.B)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(CONTROL.L + CONTROL.R, (CONTROL.F + CONTROL.B) * 0.2, 0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
-					lCONTROL = {F = CONTROL.F, B = CONTROL.B, L = CONTROL.L, R = CONTROL.R}
-				elseif (CONTROL.L + CONTROL.R) == 0 and (CONTROL.F + CONTROL.B) == 0 and SPEED ~= 0 then
-					BV.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lCONTROL.F + lCONTROL.B)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lCONTROL.L + lCONTROL.R, (lCONTROL.F + lCONTROL.B) * 0.2, 0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p)) * SPEED
-				else
-					BV.velocity = Vector3.new(0, 0.1, 0)
-				end
-				BG.cframe = game.Workspace.CurrentCamera.CoordinateFrame
-			until not _G.FLYING
-			CONTROL = {F = 0, B = 0, L = 0, R = 0}
-			lCONTROL = {F = 0, B = 0, L = 0, R = 0}
-			SPEED = 0
-			BG:destroy()
-			BV:destroy()
-			LP.Character.Humanoid.PlatformStand = false
-		end)
-	end
-
-	MOUSE.KeyDown:connect(function(KEY)
-		if KEY:lower() == 'w' then
-			CONTROL.F = 1
-		elseif KEY:lower() == 's' then
-			CONTROL.B = -1
-		elseif KEY:lower() == 'a' then
-			CONTROL.L = -1 
-		elseif KEY:lower() == 'd' then 
-			CONTROL.R = 1
-		end
-	end)
-
-	MOUSE.KeyUp:connect(function(KEY)
-		if KEY:lower() == 'w' then
-			CONTROL.F = 0
-		elseif KEY:lower() == 's' then
-			CONTROL.B = 0
-		elseif KEY:lower() == 'a' then
-			CONTROL.L = 0
-		elseif KEY:lower() == 'd' then
-			CONTROL.R = 0
-		end
-	end)
-
-
-
-
-	FLY()
-end)
-
-PlayerTracker.Name = "PlayerTracker"
-PlayerTracker.Parent = main
-PlayerTracker.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-PlayerTracker.Position = UDim2.new(0.212290496, 0, 0.179372191, 0)
-PlayerTracker.Size = UDim2.new(0, 58, 0, 50)
-PlayerTracker.Font = Enum.Font.SourceSans
-PlayerTracker.Text = "Player Tracker"
-PlayerTracker.TextColor3 = Color3.fromRGB(0, 0, 0)
-PlayerTracker.TextScaled = true
-PlayerTracker.TextSize = 14.000
-PlayerTracker.TextWrapped = true
-PlayerTracker.MouseButton1Down:Connect(function()
-	loadstring(game:HttpGet('https://raw.githubusercontent.com/Blissful4992/ESPs/main/PlayerRadar.lua'))()
-end)
-
-Btools.Name = "Btools"
-Btools.Parent = main
-Btools.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-Btools.Position = UDim2.new(0.402234614, 0, 0.179372191, 0)
-Btools.Size = UDim2.new(0, 58, 0, 50)
-Btools.Font = Enum.Font.SourceSans
-Btools.Text = "Btools"
-Btools.TextColor3 = Color3.fromRGB(0, 0, 0)
-Btools.TextScaled = true
-Btools.TextSize = 14.000
-Btools.TextWrapped = true
-Btools.MouseButton1Down:Connect(function()
-	a = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
-	a.BinType = 2
-	b = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
-	b.BinType = 3
-	c = Instance.new("HopperBin", game.Players.LocalPlayer.Backpack)
-	c.BinType = 4
-end)
-
-OREHP.Name = "OREHP"
-OREHP.Parent = main
-OREHP.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-OREHP.Position = UDim2.new(0.592178762, 0, 0.179372191, 0)
-OREHP.Size = UDim2.new(0, 58, 0, 50)
-OREHP.Font = Enum.Font.SourceSans
-OREHP.Text = "More Hp"
-OREHP.TextColor3 = Color3.fromRGB(0, 0, 0)
-OREHP.TextScaled = true
-OREHP.TextSize = 14.000
-OREHP.TextWrapped = true
-OREHP.MouseButton1Down:Connect(function()
-	local RunService = game:GetService("RunService")
-	local humanoid = game.Players.LocalPlayer.Character.Humanoid
-
-	RunService.Heartbeat:Connect(function()
-		humanoid.Health = 42834781747802
-	end)
-end)
-
 close.Name = "close"
 close.Parent = main
-close.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-close.Position = UDim2.new(0.877094984, 0, 0, 0)
-close.Size = UDim2.new(0, 44, 0, 33)
+close.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+close.Position = UDim2.new(0.88719511, 0, 0, 0)
+close.Size = UDim2.new(0, 37, 0, 30)
 close.Font = Enum.Font.SourceSans
 close.Text = "X"
 close.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -197,14 +60,161 @@ close.TextSize = 14.000
 close.TextWrapped = true
 close.MouseButton1Down:Connect(function()
 	main.Visible = false
-	Open.Visible = true
+	OPEN.Visible = true
+end)
+
+Fly.Name = "Fly"
+Fly.Parent = main
+Fly.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+Fly.Position = UDim2.new(0.0213414636, 0, 0.166666672, 0)
+Fly.Size = UDim2.new(0, 42, 0, 36)
+Fly.Font = Enum.Font.SourceSans
+Fly.Text = "Fly (press e to fly)"
+Fly.TextColor3 = Color3.fromRGB(0, 0, 0)
+Fly.TextScaled = true
+Fly.TextSize = 14.000
+Fly.TextWrapped = true
+Fly.MouseButton1Down:Connect(function()
+	repeat wait()
+	until game.Players.LocalPlayer and game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:findFirstChild("Torso") and game.Players.LocalPlayer.Character:findFirstChild("Humanoid")
+	local mouse = game.Players.LocalPlayer:GetMouse()
+	repeat wait() until mouse
+	local plr = game.Players.LocalPlayer
+	local torso = plr.Character.Torso
+	local flying = true
+	local deb = true
+	local ctrl = {f = 0, b = 0, l = 0, r = 0}
+	local lastctrl = {f = 0, b = 0, l = 0, r = 0}
+	local maxspeed = 50
+	local speed = 0
+
+	function Fly()
+		local bg = Instance.new("BodyGyro", torso)
+		bg.P = 9e4
+		bg.maxTorque = Vector3.new(9e9, 9e9, 9e9)
+		bg.cframe = torso.CFrame
+		local bv = Instance.new("BodyVelocity", torso)
+		bv.velocity = Vector3.new(0,0.1,0)
+		bv.maxForce = Vector3.new(9e9, 9e9, 9e9)
+		repeat wait()
+			plr.Character.Humanoid.PlatformStand = true
+			if ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0 then
+				speed = speed+.5+(speed/maxspeed)
+				if speed > maxspeed then
+					speed = maxspeed
+				end
+			elseif not (ctrl.l + ctrl.r ~= 0 or ctrl.f + ctrl.b ~= 0) and speed ~= 0 then
+				speed = speed-1
+				if speed < 0 then
+					speed = 0
+				end
+			end
+			if (ctrl.l + ctrl.r) ~= 0 or (ctrl.f + ctrl.b) ~= 0 then
+				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (ctrl.f+ctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(ctrl.l+ctrl.r,(ctrl.f+ctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
+				lastctrl = {f = ctrl.f, b = ctrl.b, l = ctrl.l, r = ctrl.r}
+			elseif (ctrl.l + ctrl.r) == 0 and (ctrl.f + ctrl.b) == 0 and speed ~= 0 then
+				bv.velocity = ((game.Workspace.CurrentCamera.CoordinateFrame.lookVector * (lastctrl.f+lastctrl.b)) + ((game.Workspace.CurrentCamera.CoordinateFrame * CFrame.new(lastctrl.l+lastctrl.r,(lastctrl.f+lastctrl.b)*.2,0).p) - game.Workspace.CurrentCamera.CoordinateFrame.p))*speed
+			else
+				bv.velocity = Vector3.new(0,0.1,0)
+			end
+			bg.cframe = game.Workspace.CurrentCamera.CoordinateFrame * CFrame.Angles(-math.rad((ctrl.f+ctrl.b)*50*speed/maxspeed),0,0)
+		until not flying
+		ctrl = {f = 0, b = 0, l = 0, r = 0}
+		lastctrl = {f = 0, b = 0, l = 0, r = 0}
+		speed = 0
+		bg:Destroy()
+		bv:Destroy()
+		plr.Character.Humanoid.PlatformStand = false
+	end
+	mouse.KeyDown:connect(function(key)
+		if key:lower() == "e" then
+			if flying then flying = false
+			else
+				flying = true
+				Fly()
+			end
+		elseif key:lower() == "w" then
+			ctrl.f = 1
+		elseif key:lower() == "s" then
+			ctrl.b = -1
+		elseif key:lower() == "a" then
+			ctrl.l = -1
+		elseif key:lower() == "d" then
+			ctrl.r = 1
+		end
+	end)
+	mouse.KeyUp:connect(function(key)
+		if key:lower() == "w" then
+			ctrl.f = 0
+		elseif key:lower() == "s" then
+			ctrl.b = 0
+		elseif key:lower() == "a" then
+			ctrl.l = 0
+		elseif key:lower() == "d" then
+			ctrl.r = 0
+		end
+	end)
+	Fly()
+end)
+
+Btools.Name = "Btools"
+Btools.Parent = main
+Btools.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+Btools.Position = UDim2.new(0.185975596, 0, 0.166666672, 0)
+Btools.Size = UDim2.new(0, 42, 0, 36)
+Btools.Font = Enum.Font.SourceSans
+Btools.Text = "Btools"
+Btools.TextColor3 = Color3.fromRGB(0, 0, 0)
+Btools.TextScaled = true
+Btools.TextSize = 14.000
+Btools.TextWrapped = true
+Btools.MouseButton1Down:Connect(function()
+	local tool1 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+	local tool2 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+	local tool3 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+	local tool4 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+	local tool5 = Instance.new("HopperBin",game.Players.LocalPlayer.Backpack)
+	tool1.BinType = "Clone"
+	tool2.BinType = "GameTool"
+	tool3.BinType = "Hammer"
+	tool4.BinType = "Script"
+	tool5.BinType = "Grab"
+end)
+
+MoreHp.Name = "MoreHp"
+MoreHp.Parent = main
+MoreHp.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+MoreHp.Position = UDim2.new(0.35060975, 0, 0.166666672, 0)
+MoreHp.Size = UDim2.new(0, 42, 0, 36)
+MoreHp.Font = Enum.Font.SourceSans
+MoreHp.Text = "Godmode for toh"
+MoreHp.TextColor3 = Color3.fromRGB(0, 0, 0)
+MoreHp.TextScaled = true
+MoreHp.TextSize = 14.000
+MoreHp.TextWrapped = true
+MoreHp.MouseButton1Down:Connect(function()
+	local LocalPlayer = game:GetService("Players").LocalPlayer
+
+	local function Invincibility()
+		if LocalPlayer.Character then
+			for i, v in pairs(LocalPlayer.Character:GetChildren()) do
+				if v.Name == "hitbox" then
+					v:Destroy()
+				end
+			end
+		end
+	end
+
+	while wait(0.5) do
+		Invincibility(LocalPlayer)
+	end
 end)
 
 RevizAdmin.Name = "Reviz Admin"
 RevizAdmin.Parent = main
-RevizAdmin.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-RevizAdmin.Position = UDim2.new(0.793296099, 0, 0.179372191, 0)
-RevizAdmin.Size = UDim2.new(0, 58, 0, 50)
+RevizAdmin.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+RevizAdmin.Position = UDim2.new(0.515243888, 0, 0.166666672, 0)
+RevizAdmin.Size = UDim2.new(0, 42, 0, 36)
 RevizAdmin.Font = Enum.Font.SourceSans
 RevizAdmin.Text = "Reviz Admin"
 RevizAdmin.TextColor3 = Color3.fromRGB(0, 0, 0)
@@ -212,6 +222,7 @@ RevizAdmin.TextScaled = true
 RevizAdmin.TextSize = 14.000
 RevizAdmin.TextWrapped = true
 RevizAdmin.MouseButton1Down:Connect(function()
+
 	prefix = ";"
 	wait(0.3)
 	Commands = {
@@ -3411,13 +3422,13 @@ RevizAdmin.MouseButton1Down:Connect(function()
 	intro:Destroy()
 end)
 
-PrisonBreaker.Name = "PrisonBreaker"
+PrisonBreaker.Name = "Prison Breaker"
 PrisonBreaker.Parent = main
-PrisonBreaker.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-PrisonBreaker.Position = UDim2.new(0.0195530653, 0, 0.443946183, 0)
-PrisonBreaker.Size = UDim2.new(0, 58, 0, 50)
+PrisonBreaker.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+PrisonBreaker.Position = UDim2.new(0.679878056, 0, 0.166666672, 0)
+PrisonBreaker.Size = UDim2.new(0, 42, 0, 36)
 PrisonBreaker.Font = Enum.Font.SourceSans
-PrisonBreaker.Text = "PrisonBreakerV1.5"
+PrisonBreaker.Text = "Prison Breaker"
 PrisonBreaker.TextColor3 = Color3.fromRGB(0, 0, 0)
 PrisonBreaker.TextScaled = true
 PrisonBreaker.TextSize = 14.000
@@ -9168,30 +9179,133 @@ PrisonBreaker.MouseButton1Down:Connect(function()
 	end)
 end)
 
+PlayerRadar.Name = "Player Radar"
+PlayerRadar.Parent = main
+PlayerRadar.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+PlayerRadar.Position = UDim2.new(0.850609779, 0, 0.166666672, 0)
+PlayerRadar.Size = UDim2.new(0, 42, 0, 36)
+PlayerRadar.Font = Enum.Font.SourceSans
+PlayerRadar.Text = "Player Radar"
+PlayerRadar.TextColor3 = Color3.fromRGB(0, 0, 0)
+PlayerRadar.TextScaled = true
+PlayerRadar.TextSize = 14.000
+PlayerRadar.TextWrapped = true
+PlayerRadar.MouseButton1Down:Connect(function()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/Blissful4992/ESPs/main/PlayerRadar.lua'))()
+end)
+
 idk.Name = "idk"
 idk.Parent = main
-idk.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-idk.Position = UDim2.new(0.0195530653, 0, 0.71300447, 0)
-idk.Size = UDim2.new(0, 58, 0, 50)
+idk.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+idk.Position = UDim2.new(0.0213414431, 0, 0.370370358, 0)
+idk.Size = UDim2.new(0, 42, 0, 36)
 idk.Font = Enum.Font.SourceSans
-idk.Text = "i just made this for nothing it does nothing LOL"
+idk.Text = "Nothing"
 idk.TextColor3 = Color3.fromRGB(0, 0, 0)
 idk.TextScaled = true
 idk.TextSize = 14.000
 idk.TextWrapped = true
 
-Open.Name = "Open"
-Open.Parent = ScreenGui
-Open.BackgroundColor3 = Color3.fromRGB(255, 17, 252)
-Open.Position = UDim2.new(0, 0, 0.468711644, 0)
-Open.Size = UDim2.new(0, 108, 0, 50)
-Open.Font = Enum.Font.SourceSans
-Open.Text = "Open"
-Open.TextColor3 = Color3.fromRGB(0, 0, 0)
-Open.TextScaled = true
-Open.TextSize = 14.000
-Open.TextWrapped = true
-Open.MouseButton1Down:Connect(function()
+idk_2.Name = "idk"
+idk_2.Parent = main
+idk_2.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+idk_2.Position = UDim2.new(0.0213414431, 0, 0.578703761, 0)
+idk_2.Size = UDim2.new(0, 42, 0, 36)
+idk_2.Font = Enum.Font.SourceSans
+idk_2.Text = "Nothing"
+idk_2.TextColor3 = Color3.fromRGB(0, 0, 0)
+idk_2.TextScaled = true
+idk_2.TextSize = 14.000
+idk_2.TextWrapped = true
+
+idk_3.Name = "idk"
+idk_3.Parent = main
+idk_3.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+idk_3.Position = UDim2.new(0.0213414431, 0, 0.782407463, 0)
+idk_3.Size = UDim2.new(0, 42, 0, 36)
+idk_3.Font = Enum.Font.SourceSans
+idk_3.Text = "Nothing"
+idk_3.TextColor3 = Color3.fromRGB(0, 0, 0)
+idk_3.TextScaled = true
+idk_3.TextSize = 14.000
+idk_3.TextWrapped = true
+
+CreditsOPEN.Name = "CreditsOPEN"
+CreditsOPEN.Parent = main
+CreditsOPEN.BackgroundColor3 = Color3.fromRGB(255, 1, 234)
+CreditsOPEN.Position = UDim2.new(0.85060972, 0, 0.782407463, 0)
+CreditsOPEN.Size = UDim2.new(0, 42, 0, 36)
+CreditsOPEN.Font = Enum.Font.SourceSans
+CreditsOPEN.Text = "Credits"
+CreditsOPEN.TextColor3 = Color3.fromRGB(0, 0, 0)
+CreditsOPEN.TextScaled = true
+CreditsOPEN.TextSize = 14.000
+CreditsOPEN.TextWrapped = true
+CreditsOPEN.MouseButton1Down:Connect(function()
+	Credits.Visible = true
+	main.Visible = false
+end)
+
+Credits.Name = "Credits"
+Credits.Parent = ScreenGui
+Credits.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Credits.Position = UDim2.new(0.715705097, 0, 0.431901842, 0)
+Credits.Size = UDim2.new(0, 300, 0, 206)
+Credits.Draggable = true
+Credits.Active = true
+Credits.Visible = false
+
+CTitle.Name = "CTitle"
+CTitle.Parent = Credits
+CTitle.BackgroundColor3 = Color3.fromRGB(18, 190, 5)
+CTitle.Size = UDim2.new(0, 300, 0, 30)
+CTitle.Font = Enum.Font.SourceSans
+CTitle.Text = "Credits"
+CTitle.TextColor3 = Color3.fromRGB(0, 0, 0)
+CTitle.TextScaled = true
+CTitle.TextSize = 14.000
+CTitle.TextWrapped = true
+
+CreditsT.Name = "CreditsT"
+CreditsT.Parent = Credits
+CreditsT.BackgroundColor3 = Color3.fromRGB(18, 156, 147)
+CreditsT.Position = UDim2.new(0, 0, 0.14563106, 0)
+CreditsT.Size = UDim2.new(0, 300, 0, 176)
+CreditsT.Font = Enum.Font.SourceSans
+CreditsT.Text = "Made By JoinTeam_MHR. Helper and idea maker: MATIUSZYOUTUBE00. Scripter: JoinTeam_MHR. Friends :D : Szymeq1902 , SZYMONPROS10 , JustVito2003 , blazejvx , 12345nur32 , blank21098 , MylesGamine , PhilipM12305 , Neltoziomal , noobaltan12345677890 , Tytonix_123 , temuksgod123456789 , WEJOWEOU_WEJOWEOU , zxcpudgik228 and konieckropka123! Banned Friends :( : ulujhigggghhhu. PrisonBreaker was made by Jake11Price On YT! My fav youtuber: ZFlames , MrBeast and SMG4!"
+CreditsT.TextColor3 = Color3.fromRGB(0, 0, 0)
+CreditsT.TextScaled = true
+CreditsT.TextSize = 14.000
+CreditsT.TextWrapped = true
+
+TextButton.Parent = Credits
+TextButton.BackgroundColor3 = Color3.fromRGB(255, 255, 34)
+TextButton.Position = UDim2.new(0.870000005, 0, 0, 0)
+TextButton.Size = UDim2.new(0, 39, 0, 30)
+TextButton.Font = Enum.Font.SourceSans
+TextButton.Text = "X"
+TextButton.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextButton.TextScaled = true
+TextButton.TextSize = 14.000
+TextButton.TextWrapped = true
+TextButton.MouseButton1Down:Connect(function()
 	main.Visible = true
-	Open.Visible = false
+	Credits.Visible = false
+end)
+
+OPEN.Name = "OPEN"
+OPEN.Parent = ScreenGui
+OPEN.BackgroundColor3 = Color3.fromRGB(255, 0, 0)
+OPEN.Position = UDim2.new(0, 0, 0.468711644, 0)
+OPEN.Size = UDim2.new(0, 121, 0, 50)
+OPEN.Font = Enum.Font.SourceSans
+OPEN.Text = "OPEN"
+OPEN.TextColor3 = Color3.fromRGB(0, 0, 0)
+OPEN.TextScaled = true
+OPEN.TextSize = 14.000
+OPEN.TextWrapped = true
+OPEN.Visible = true
+OPEN.MouseButton1Down:Connect(function()
+	main.Visible = true
+	OPEN.Visible = false
 end)
